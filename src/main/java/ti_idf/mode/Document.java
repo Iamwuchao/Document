@@ -2,24 +2,24 @@ package ti_idf.mode;
 
 import java.util.List;
 
-import com.google.common.collect.Lists;
+import com.google.common.collect.HashMultiset;
 
 public abstract class Document {
    protected final String content;
-    protected final Analyzer analyzer;
-	private List<String> wordList;
+   protected final Analyzer analyzer;
+   private  HashMultiset<String> wordsMultiset;
 	public Document(String content,Analyzer analyzer){
 		this.analyzer = analyzer;
 		this.content = content;
 	}
-  
-	abstract public void setAnalysis(Analyzer analyzer);
+ 
 	
-	public List<String> getAllWords(){
-		if(wordList==null || wordList.isEmpty()){
-			wordList = analyzer.getAllWord(this);
+	public HashMultiset<String> getAllWords(){
+		if(wordsMultiset==null || wordsMultiset.isEmpty()){
+			wordsMultiset = HashMultiset.create();
+			wordsMultiset.addAll(analyzer.getAllWord(this));
 		}
-		return wordList;
+		return wordsMultiset;
 	}
 	
 	public String getContent(){

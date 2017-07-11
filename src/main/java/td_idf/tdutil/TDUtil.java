@@ -13,16 +13,14 @@ public class TDUtil {
   public static TF_IDFCache getTD_IDF(List<LogDocument> documentList){
 	  TF_IDFCache tf = new TF_IDFCache();
 	  for(Document doc :documentList){
-		  List<String> wordList = doc.getAllWords();
-		  HashMultiset<String> multiSet = HashMultiset.create(); 
-		  multiSet.addAll(wordList); 
-		  for(String word:multiSet){
+		  HashMultiset<String> wordMultiSet = doc.getAllWords();
+		  for(String word:wordMultiSet){
 			 Map<String,Integer> hm = tf.getTfCache();
 			 int count = 0;
 			 if(hm.containsKey(word))
-			     count = tf.getTfCache().get(word)+multiSet.count(word);
+			     count = tf.getTfCache().get(word)+wordMultiSet.count(word);
 			 else
-				 count=multiSet.count(word);
+				 count=wordMultiSet.count(word);
 			 tf.getTfCache().put(word, count);
 			 Map<String,Integer> idf = tf.getIdfCache();
 			 if(idf.containsKey(word))

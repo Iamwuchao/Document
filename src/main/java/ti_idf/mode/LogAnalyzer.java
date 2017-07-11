@@ -12,6 +12,8 @@ import org.wltea.analyzer.lucene.IKAnalyzer;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
+import tf_idf.fileutil.CharUtil;
+
 public class LogAnalyzer implements Analyzer{
 
 	public List<String> getAllWord(Document document){
@@ -34,16 +36,27 @@ public class LogAnalyzer implements Analyzer{
 		analyzer.close();
 		reader.close();
 		}
+		getSpecialCharacter(document,wordsList);
 		return wordsList;
 	}
 
 	
 	
-	/*private List<String> getSpecialCharacter(Document document){
+	private void getSpecialCharacter(Document document,List<String> wordList){
 		String content = document.getContent();
-		Set<String> wordSet = Sets.newHashSet();
+		Set<String> wordsSet = Sets.newHashSet();
+		wordsSet.addAll(wordList);
 		for(int i=0;i<content.length();i++){
-			
+			char ch = content.charAt(i);
+			if(wordsSet.contains(String.valueOf(ch))) continue;
+			if(CharUtil.isChinesePunctuation(ch))
+			{
+				wordList.add(String.valueOf(ch));
+			}
+			else if(CharUtil.isENPunctuation(ch))
+			{
+				wordList.add(String.valueOf(ch));
+			}
 		}
-	}*/
+	}
 }

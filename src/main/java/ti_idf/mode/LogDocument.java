@@ -6,10 +6,5 @@ public class LogDocument extends Document{
 		super(content, analyzer);
 	}
 
-	@Override
-	public void setAnalysis(Analyzer analyzer) {
-		// TODO Auto-generated method stub
-		
-	}
-
+	
 }
